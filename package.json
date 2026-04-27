@@ -1,0 +1,25 @@
+{
+  "name": "slack-github-mcp-bot",
+  "version": "1.0.0",
+  "description": "A Slack bot that answers GitHub questions using AWS Bedrock (Claude) and GitHub MCP",
+  "main": "index.js",
+  "scripts": {
+    "start":   "node index.js",
+    "dev":     "nodemon index.js",
+    "summary": "node index.js --summary"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.0.0",
+    "@slack/bolt":                     "^4.0.0",
+    "@slack/web-api":                  "^7.0.0",
+    "dotenv":                          "^16.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["slack", "bot", "github", "mcp", "bedrock", "claude", "ai"],
+  "license": "MIT"
+}
