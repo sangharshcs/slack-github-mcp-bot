@@ -29,7 +29,7 @@ Claude receives all available GitHub tools at startup. When a question arrives, 
 
 ## Prerequisites
 
-- Node.js 18+ (required for global `fetch`)
+- Node.js 18+ (required for global `fetch`), **or** Docker / Docker Compose
 - AWS account with Bedrock access and Claude Sonnet 4.6 enabled
 - GitHub account with a repository to query
 - Slack workspace where you can install apps
@@ -71,8 +71,8 @@ Claude receives all available GitHub tools at startup. When a question arrives, 
 cp .env.example .env
 # Fill in all values in .env
 
-npm install
-node index.js
+yarn install
+yarn start
 # Bot ready — 44 tools loaded
 ```
 
@@ -80,6 +80,44 @@ node index.js
 
 ```
 /invite @your-bot-name
+```
+
+---
+
+## Docker
+
+The bot uses Slack Socket Mode, so it only needs outbound HTTPS access — no ports are exposed.
+
+### Configure
+
+```bash
+cp .env.example .env
+# Fill in all values in .env
+```
+
+### Run (production)
+
+```bash
+docker compose up --build -d
+docker compose logs -f bot
+```
+
+### Run (development with live reload)
+
+```bash
+docker compose --profile dev up --build bot-dev
+```
+
+### One-off morning summary
+
+```bash
+docker compose run --rm bot --summary
+```
+
+### Stop
+
+```bash
+docker compose down
 ```
 
 ---
@@ -94,7 +132,7 @@ If `SUMMARY_CHANNEL_ID` is set in `.env`, the bot posts a daily summary at 9 AM 
 
 **Test it immediately:**
 ```bash
-npm run summary
+yarn summary
 ```
 
 ---
@@ -177,8 +215,12 @@ Ship these logs to Datadog, CloudWatch, or Grafana. Tool call frequency, latency
 ## Project Structure
 
 ```
-index.js        — Slack handlers, agent loop, MCP client, tool registry, scheduler
+index.js            — Slack handlers, agent loop, MCP client, tool registry, scheduler
 package.json
+.yarnrc.yml
+yarn.lock
+Dockerfile
+docker-compose.yml
 .env.example
 .gitignore
 README.md
