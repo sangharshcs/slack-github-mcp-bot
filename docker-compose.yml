@@ -1,0 +1,25 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  bot-dev:
+    profiles:
+      - dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    env_file:
+      - .env
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
